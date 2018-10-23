@@ -1,0 +1,101 @@
+---
+title: "Homework Week 3 - Simpsons Names"
+author: "Robert_M"
+date: "October 22, 2018"
+output: 
+  html_document: 
+    theme: cerulean
+    toc: true
+    toc_depth: 3
+    number_sections: false
+---
+
+## Load packages 
+```{r message=FALSE}
+library(stringr)
+```
+
+
+##String Vector
+
+```{r}
+Simpsons <-"555-1239Moe Szyslak(636) 555-0113Burns, C. Montgomery555-6542Rev. Timothy Lovejoy555 8904Ned Flanders636-555-3226Simpson, Homer5553642Dr. Julius Hibbert"
+
+phone <- "([2-9][0-9]{2})[- .]([0-9]{3})[- .]([0-9]{4})"
+Sphone = "([0-9]{3})[- .]([0-9]{4})"
+```
+
+## Question 1 - Name
+```{r}
+#Stripping out names
+name <- unlist(str_extract_all(Simpsons, "[[:alpha:]., ]{2,}")) 
+name
+#Creating only names 
+name2 <- str_trim(sub("[A-Za-z]{1,}\\.","",name))
+name2
+
+#Reversing names if comma is included
+name3 <- sub("(\\w+),\\s+(\\w+)","\\2 \\1", name2 )
+name3
+```
+
+## Question 2 - Title
+```{r}
+title <- str_detect(name, "[:alpha:]{2,3}\\.")
+title
+```
+
+## Question 3 - Initial
+```{r}
+Initial <- str_detect(name, "[:alpha:]{1}\\.")
+Initial
+```
+
+## Question 4 - Expressions
+```{r}
+###4.1 - [0-9]+\\$
+### This expression will match any number of digits followed by $
+### example is 12345$
+Ex4.1 <- "555555555$"
+str_extract_all(Ex4.1, "[0-9]+\\$")
+
+###4.2 - \\b[a-z]{1,4}\\b
+### This expression will find strings four lower case letters or less after a space. 
+### example is let it go
+Ex4.2 <- "let it go"
+str_extract_all(Ex4.2, "\\b[a-z]{1,4}\\b")
+
+###4.3 - .*?\\.txt$
+### This expression will return .txt and the character preceding it. .txt will end the expression.
+### example is data.txt
+Ex4.3 <- "data.txt"
+str_extract_all(Ex4.3, ".*?\\.txt$")
+
+###4.4 - \\d{2}/\\d{2}/\\d{4}
+### This is a date expression 2-digit Mo, 2-digit day, 4-digit yr
+### (Or 2-digit day, 2-digit mo, 4-digit yr in Europe)
+### example is 09/16/2018
+Ex4.4 <- "02/10/2018"
+str_extract_all(Ex4.4, "\\d{2}/\\d{2}/\\d{4}")
+
+###4.5 - <(.+?)>.+?</\\1> 
+### This expression takes out HTML code
+### example is <p>start to finish</p>
+Ex4.5 <- "<p>start to finish</p>"
+str_extract_all(Ex4.5, "<(.+?)>.+?</\\1>")
+```
+
+## Question 9 - Expressions
+```{r}
+### Secret Message
+Secret <- "clcopCow1zmstc0d87wnkig7OvdicpNuggvhryn92Gjuwczi8hqrfpRxs5Aj5dwpn0Tanwo Uwisdij7Lj8kpf03AT5Idr3coc0bt7yczjatOaootj55t3Nj3ne6c4Sfek.r1w1YwwojigO d6vrfUrbz2.2bkAnbhzgv4R9i05zEcrop.wAgnb.SqoU65fPa1otfb7wEm24k6t3sR9zqe5 fy89n6Nd5t9kc4fE905gmc4Rgxo5nhDk! gr"
+```
+
+
+
+
+
+
+
+
+
